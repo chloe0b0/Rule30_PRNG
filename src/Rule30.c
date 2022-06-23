@@ -33,7 +33,7 @@ uint64_t Generate_64(State rand, size_t bits){
     uint64_t y = 0ULL;
 
     for (int j = 0; j < bits; ++j){
-        if (Yield(rand)){ SET(y, j); }
+        y = (y & ~(1ULL << j)) | (Yield(rand) << j);
         rand = Iterate(rand);
     }
 
