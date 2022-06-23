@@ -19,7 +19,7 @@
 typedef uint32_t State;
 
 static inline State Iterate(State state){
-    State end_ = N_TH(state, 30) ^ (N_TH(state, 31) | N_TH(state, 0)) << 31;
+    State end_ = N_TH(state, 30) ^ (N_TH(state, 31) | N_TH(state, 0));
     state = (state & ~(1 << 31)) | (end_ << 31);
     State n_state = (state >> 1) ^ (state | (state << 1));
    
