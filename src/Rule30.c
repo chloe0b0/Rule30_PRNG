@@ -19,12 +19,13 @@
 typedef uint32_t State;
 
 static inline State Iterate(State state){
+    State end_ = N_TH(state, 30) ^ (N_TH(state, 31) | N_TH(state, 0)) << 31;
+    state = (state & ~(1 << 31)) | (end_ << 31);
     State n_state = (state >> 1) ^ (state | (state << 1));
    
     // Hackish trick to prevent overflow of active cells
-    if (N_TH(state, 31)){
-        n_state ^= (1UL << 31);
-    }
+    // wrap around end cell
+
     return n_state;
 }
 
