@@ -52,8 +52,8 @@ int main(void){
     assert(sizeof(State) == 8);
     State rand = (uint64_t)time(NULL) * time(NULL) * time(NULL);
 
-    for (int i = 0; i < 10000; ++i){
+    for (int i = 0; i < 250; ++i){
         rand = Iterate(rand);
-        printf("%llu \n", Generate_64(rand, 8));
+        printf("%llu, ", Generate_64(rand, 15));
     }
 }
