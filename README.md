@@ -9,3 +9,4 @@ Uses 32 bit state size
 ## Goal
 - Demonstrate good randomness
 - be as fast as possible
+- have a very small state size 
