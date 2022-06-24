@@ -13,20 +13,20 @@
 #define SET(x, n)   x |= (1 << n)
 
 // Constants
-#define EPOCHS  500
-#define BITS    15
+#define EPOCHS  5000000
+#define BITS    32
 
 typedef uint32_t State;
 
-static inline State Iterate(State state){
-    State end_ = N_TH(state, 0) ^ (N_TH(state, 31) | N_TH(state, 30)) << 31;
-    state = (state & ~(1 << 31)) | (end_ << 31);
-    State n_state = (state >> 1) ^ (state | (state << 1));
+static inline void Iterate(State* state){
+    State end_ = N_TH(*state, 0) ^ (N_TH(*state, 31) | N_TH(*state, 30)) << 31;
+    *state = (*state & ~(1 << 31)) | (end_ << 31);
+    State n_state = (*state >> 1) ^ (*state | (*state << 1));
    
     // Hackish trick to prevent overflow of active cells
     // wrap around end cell
 
-    return n_state;
+    *state = n_state;
 }
 
 // Yield the center cell's current state
@@ -34,12 +34,12 @@ static inline uint32_t Yield(State state){
     return N_TH(state, 32/2); 
 }
 
-uint64_t Generate_64(State rand, size_t bits){
+uint64_t Generate_64(State* rand, size_t bits){
     uint64_t y = 0ULL;
 
     for (int j = 0; j < bits; ++j){
-        y = (y & ~(1ULL << j)) | (Yield(rand) << j);
-        rand = Iterate(rand);
+        y = (y & ~(1ULL << j)) | (Yield(*rand) << j);
+        Iterate(rand);
     }
 
     return y;
@@ -60,9 +60,8 @@ int main(void){
     clock_t t;
     t = clock();
     for (int i = EPOCHS; --i;){
-        rand = Iterate(rand);
-        uint64_t x = Generate_64(rand, BITS);
-        printf("%lu \n", x);
+        uint64_t x = Generate_64(&rand, BITS);
+        // printf("%lu \n", x);
     }
     t = clock() - t;
     double t_ = ((double)t/CLOCKS_PER_SEC);
