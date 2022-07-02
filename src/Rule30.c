@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdbool.h>
 
-// For abitrary state sizes, will need an array of N booleans, this means 64 bits per cell (assuming each is a boolean)
+// For abitrary state sizes, will need an array of N booleans, this means 8 bits per cell (assuming each is a boolean)
 // If we instead use an usigned long long, we can get 1 bit per cell and use bitwise operations to update the state
 
 // Helper macros
