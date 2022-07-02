@@ -13,12 +13,13 @@
 #define SET(x, n)   x |= (1 << n)
 
 // Constants
-#define EPOCHS  500
-#define BITS    1
+#define EPOCHS  500000000UL
+#define BITS    64
+#define OUT     false
 
 typedef uint64_t State;
 
-static inline void Iterate(State* state){
+static inline void Iterate(State* __restrict state) {
     State end_ = N_TH(*state, 0) ^ (N_TH(*state, 63) | N_TH(*state, 62)) << 63;
     *state = (*state & ~(1ULL << 63)) | (end_ << 63);
     State n_state = (*state >> 1ULL) ^ (*state | (*state << 1ULL));
@@ -30,14 +31,14 @@ static inline void Iterate(State* state){
 }
 
 // Yield the center cell's current state
-static inline uint64_t Yield(State state){
+static inline uint64_t Yield(State state) {
     return N_TH(state, 64/2); 
 }
 
-uint64_t Generate_64(State* rand, size_t bits){
+uint64_t Generate_64(State* __restrict rand, size_t bits) {
     uint64_t y = 0ULL;
 
-    for (int j = 0; j < bits; ++j){
+    for (int j = 0; j < bits; ++j) {
         y = (y & ~(1ULL << j)) | (Yield(*rand) << j);
         Iterate(rand);
     }
@@ -45,26 +46,32 @@ uint64_t Generate_64(State* rand, size_t bits){
     return y;
 }
 
-void PrintState(State state){
-    for (int i = 64; i--;){
-        const char cell = N_TH(state, i) ? '1' : '0';
+void PrintState(State state) {
+    for (int i = 64; i--;) {
+        const char cell = N_TH(state, i) ? '1' : ' ';
         printf("%c", cell);
     }
     printf("\n");
 }
 
-int main(void){
+int main(void) {
     assert(sizeof(State) == 8);
     State rand = (uint64_t)time(NULL) * time(NULL) * time(NULL);
-
+#if OUT
+    FILE* outfile = fopen("out.txt", "a");
+#endif
     clock_t t;
     t = clock();
-    for (int i = EPOCHS; --i;){
+    for (size_t i = EPOCHS; --i;) {
         uint64_t x = Generate_64(&rand, BITS);
-        printf("%lu, ", x);
-        if (i+1 % 8== 0){ printf("\n"); }
+#if OUT
+        fprintf(outfile, "%lu\n", x);
+#endif
     }
     t = clock() - t;
     double t_ = ((double)t/CLOCKS_PER_SEC);
     printf("Time taken to generate %d random %d-bit pseudo-random numbers: %f seconds\n", EPOCHS, BITS, t_);
+#if OUT
+    fclose(outfile);
+#endif
 }
