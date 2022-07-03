@@ -31,7 +31,7 @@ static inline void Iterate(State* __restrict state) {
     // Hackish trick to prevent overflow of active cells
     // wrap around end cell
 
-    *state = (*state >> 1ULL) ^ (*state | (*state << 1ULL));
+    *state = (*state >> 1) ^ (*state | (*state << 1));
 }
 
 // Yield the center cell's current state

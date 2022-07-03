@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 with open("out.txt", 'r') as f:
     data = [float(x) for x in f.read().split('\n') if x]
+    print(len(data))
     plt.title("Rule 30 PRNG")
     plt.xlabel("Value")
     plt.ylabel("Occurences")
