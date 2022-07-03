@@ -28,6 +28,6 @@ The Rule-30 PRNG displays very good uniformity in its outputs
 
 ## Space 
 The automata uses only 64 bits to encode its state. This is in comparison to other PRNGs such as 
-the Mersenne Twister, which may use 20480 bits (2.5 Kib as per [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister))
-
+the Mersenne Twister, which may use 20480 bits (2.5 Kib as per [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister)).
+With a state of 64 bits it even beats the TinyMT variant which has a 127 bit state.
 
