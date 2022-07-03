@@ -9,7 +9,7 @@
 // For best performance compile with:
 // gcc -o PRNG Rule30.c -O2 -finline-functions
 
-// For abitrary state sizes, will need an array of N booleans, this means 8 bits per cell (assuming each is a boolean)
+// For abitrary state sizes, will need an array of N booleans, this means 64 bits per cell (assuming each is a boolean)
 // If we instead use an usigned long long, we can get 1 bit per cell and use bitwise operations to update the state
 
 // Helper macros
@@ -18,7 +18,7 @@
 
 // Constants
 #define EPOCHS  5000UL
-#define BITS    1
+#define BITS    64
 #define OUT     true
 #define MODE    "a"
 
@@ -69,7 +69,7 @@ int main(void) {
     for (size_t i = EPOCHS; --i;) {
         uint64_t x = Generate_64(&rand, BITS);
 #if OUT
-        fprintf(outfile, "%lu\n", x);
+        fprintf(outfile, "%llu\n", x);
 #endif
     }
     t = clock() - t;
