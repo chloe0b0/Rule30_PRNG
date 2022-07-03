@@ -1,10 +1,8 @@
 CC = gcc
+delete = del
 
 all:
-	PRNG
-
-PRNG:
 	$(CC) -o PRNG Rule30.c -O2 -finline-functions
 
 clean:
-	rm PRNG
+	$(delete) PRNG.exe
