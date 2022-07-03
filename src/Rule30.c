@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <time.h>
+#include <string.h>
 #include <stdbool.h>
 
 // For best performance compile with:
@@ -16,9 +17,10 @@
 #define SET(x, n)   x |= (1 << n)
 
 // Constants
-#define EPOCHS  50000000UL
-#define BITS    64
-#define OUT     false
+#define EPOCHS  5000UL
+#define BITS    1
+#define OUT     true
+#define MODE    "a"
 
 typedef uint64_t State;
 
@@ -60,7 +62,7 @@ int main(void) {
     assert(sizeof(State) == 8);
     State rand = (uint64_t)time(NULL) * time(NULL) * time(NULL);
 #if OUT
-    FILE* outfile = fopen("out.txt", "a");
+    FILE* outfile = fopen("out.txt", MODE);
 #endif
     clock_t t;
     t = clock();

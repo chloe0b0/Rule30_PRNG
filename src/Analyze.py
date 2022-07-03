@@ -1,14 +1,12 @@
 import random
+import numpy as np
+from scipy.spatial import distance
 import matplotlib.pyplot as plt
 
 with open("out.txt", 'r') as f:
-    data = [float(x) for x in f.read().split('\n') if x]
-    print(data)
-    comp = [random.randint(0, max(data)) for x in range(len(data))]
+    data = np.array([float(x) for x in f.read().split('\n') if x][:-452])
+    box = int(np.sqrt(data.shape[0]))
+    data = data.reshape(box, box)
+    plt.imshow(data, cmap = "binary")
 
-    plt.title('Rule 30 PRNG')
-    plt.xlabel('Iteration')
-    plt.ylabel('Occurences')
-    plt.hist(data)
-    #plt.plot(comp)
     plt.show()
