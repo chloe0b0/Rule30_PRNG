@@ -1,20 +1,18 @@
-# Rule30 as a PRNG
-Using rule30 as a Pseudo-random number generator
-
-
+# Rule-30 as a PRNG
+Using Rule-30 as a Pseudo-random number generator
 
 ## Objective
 Create a PRNG with good statistical properties and a very small state 
-
-Uses 64 bit state size
 
 ## Goals
 - Demonstrate good randomness
 - be as fast as possible
 - have a very small state size 
 
-## Analysis
-Below are various graphs displaying the implementation's quality of randomness and uniformity.
+# Analysis
+## Uniformity
+
+The Rule-30 PRNG displays very good uniformity in its outputs
 
 ### Generating a 0 or 1
 ![](./img/1s.png)
@@ -27,3 +25,9 @@ Below are various graphs displaying the implementation's quality of randomness a
 
 ### Generated 244x244 Bitmap
 ![](./img/bitmap.png)
+
+## Space 
+The automata uses only 64 bits to encode its state. This is in comparison to other PRNGs such as 
+the Mersenne Twister, which may use 20480 bits (2.5 Kib as per [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister))
+
+
