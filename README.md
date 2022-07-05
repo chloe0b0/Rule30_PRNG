@@ -15,7 +15,8 @@ Create a PRNG with good statistical properties and a very small state
 ## Idea
 The idea is to use the center cell as a stream of bits. The procedure for generating
 a pseudo-random N-bit word is then very simple; starting from some initial state S0
-the automata is evolved N times, at iteration i the N-bit word's ith bit is determined by the center cell in the current state
+the automata is evolved N times, at iteration i the N-bit word's ith bit is determined by the center cell in the current state.
+It is possible to generate the N-bit word by opting to instead determine the word's N-ith bit as the center cell to fill the most significant bits first. Wether one fills the word with bits from left to right, or right to left, seems to have no impact on the uniformity of the outputs.
 
 ![](./img/Idea.png)
 
