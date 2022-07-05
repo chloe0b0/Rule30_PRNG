@@ -17,10 +17,12 @@
 #define SET(x, n)   x |= (1 << n)
 
 // Constants
-#define EPOCHS  5000UL
-#define BITS    64
-#define OUT     true
-#define MODE    "a"
+#define EPOCHS      500000UL
+#define BITS        64
+#define OUT         true
+#define MODE        "w"
+#define PRINT       false
+#define LEAST_SIG   false // Fill least significant bits
 
 typedef uint64_t State;
 
@@ -39,23 +41,30 @@ static inline uint64_t Yield(State state) {
     return N_TH(state, 64/2); 
 }
 
-uint64_t Generate_64(State* __restrict rand, size_t bits) {
-    uint64_t y = 0ULL;
-
-    for (int j = 0; j < bits; ++j) {
-        y = (y & ~(1ULL << j)) | (Yield(*rand) << j);
-        Iterate(rand);
-    }
-
-    return y;
-}
-
 void PrintState(State state) {
     for (int i = 64; i--;) {
-        const char cell = N_TH(state, i) ? '1' : ' ';
+        const char cell = N_TH(state, i) ? '1' : '0';
         printf("%c", cell);
     }
     printf("\n");
+}
+
+uint64_t Generate_64(State* __restrict rand, size_t bits) {
+    uint64_t y = 0ULL;
+
+    for (int j = 0; j <= bits; j++) {
+#if LEAST_SIG
+        y = (y & ~(1ULL << j)) | (Yield(*rand) << j);
+#else
+        y = (y & ~(1ULL << bits - j)) | (Yield(*rand) << bits - j);
+#endif
+        Iterate(rand);
+#if PRINT
+        PrintState(*rand);
+#endif
+    }
+
+    return y;
 }
 
 int main(void) {
@@ -66,8 +75,11 @@ int main(void) {
 #endif
     clock_t t;
     t = clock();
-    for (size_t i = EPOCHS; --i;) {
+    for (size_t i = 0; i < EPOCHS; ++i) {
         uint64_t x = Generate_64(&rand, BITS);
+#if PRINT
+        printf("%llu \n", x);
+#endif 
 #if OUT
         fprintf(outfile, "%llu\n", x);
 #endif

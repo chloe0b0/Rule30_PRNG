@@ -1,4 +1,7 @@
 # Rule-30 as a PRNG
+
+![](./img/Rule30.png)
+
 Using Rule-30 as a Pseudo-random number generator
 
 ## Objective
@@ -8,6 +11,13 @@ Create a PRNG with good statistical properties and a very small state
 - Demonstrate good randomness
 - be as fast as possible
 - have a very small state size 
+
+## Idea
+The idea is to use the center cell as a stream of bits. The procedure for generating
+a pseudo-random N-bit word is then very simple; starting from some initial state S0
+the automata is evolved N times, at iteration i the N-bit word's ith bit is determined by the center cell in the current state
+
+![](./img/Idea.png)
 
 # Analysis
 ## Uniformity
