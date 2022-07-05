@@ -2,7 +2,7 @@
 
 ![](./img/Rule30.png)
 
-Using Rule-30 as a Pseudo-random number generator
+Using Rule-30 as a Pseudo-random bit generator
 
 ## Objective
 Create a PRNG with good statistical properties and a very small state 
