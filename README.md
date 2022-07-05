@@ -42,3 +42,8 @@ The automata uses only 64 bits to encode its state. This is in comparison to oth
 the Mersenne Twister, which may use 20480 bits (2.5 Kib as per [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister)).
 With a state of 64 bits it even beats the TinyMT variant which has a 127 bit state.
 
+## Speed
+The automata can generate N-bit words with incredible speed. Using inline functions one can get absurdly long sequences in no time. On my machine it is able to generate a sequence of 500,000,000 64 bit pseudo-random numbers in 0 seconds.
+
+![](./img/Speed.png)
+

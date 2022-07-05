@@ -17,9 +17,9 @@
 #define SET(x, n)   x |= (1 << n)
 
 // Constants
-#define EPOCHS      500000UL
+#define EPOCHS      500000000UL
 #define BITS        64
-#define OUT         true
+#define OUT         false
 #define MODE        "w"
 #define PRINT       false
 #define LEAST_SIG   false // Fill least significant bits
