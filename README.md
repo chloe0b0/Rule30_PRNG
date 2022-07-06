@@ -47,3 +47,5 @@ The automata can generate N-bit words with incredible speed. Using inline functi
 
 ![](./img/Speed.png)
 
+### Asymptotic Analysis
+For generating a K-bit word the time complexity is linear with K. The space complexity is constant.
