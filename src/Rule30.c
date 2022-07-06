@@ -24,10 +24,10 @@
 #define PRINT       false
 #define LEAST_SIG   true // Fill least significant bits
 
-typedef uint64_t State;
+typedef uint64_t Rule30;
 
-static inline void Iterate(State* __restrict state) {
-    State end_ = N_TH(*state, 0) ^ (N_TH(*state, 63) | N_TH(*state, 62)) << 63;
+static inline void Iterate(Rule30* __restrict state) {
+    Rule30 end_ = N_TH(*state, 0) ^ (N_TH(*state, 63) | N_TH(*state, 62)) << 63;
     *state = (*state & ~(1ULL << 63)) | (end_ << 63);
    
     // Hackish trick to prevent overflow of active cells
@@ -37,11 +37,11 @@ static inline void Iterate(State* __restrict state) {
 }
 
 // Yield the center cell's current state
-static inline uint64_t Yield(State state) {
+static inline uint64_t Yield(Rule30 state) {
     return N_TH(state, 64/2); 
 }
 
-void PrintState(State state) {
+void PrintRule30(State state) {
     for (int i = 64; i--;) {
         const char cell = N_TH(state, i) ? '1' : '0';
         printf("%c", cell);
@@ -49,7 +49,7 @@ void PrintState(State state) {
     printf("\n");
 }
 
-uint64_t Generate_64(State* __restrict rand, size_t bits) {
+uint64_t Generate_64(Rule30* __restrict rand, size_t bits) {
     uint64_t y = 0ULL;
 
     for (int j = 0; j <= bits; j++) {
@@ -60,7 +60,7 @@ uint64_t Generate_64(State* __restrict rand, size_t bits) {
 #endif
         Iterate(rand);
 #if PRINT
-        PrintState(*rand);
+        PrintRule30(*rand);
 #endif
     }
 
@@ -68,8 +68,8 @@ uint64_t Generate_64(State* __restrict rand, size_t bits) {
 }
 
 int main(void) {
-    assert(sizeof(State) == 8);
-    State rand = (uint64_t)time(NULL) * time(NULL) * time(NULL);
+    assert(sizeof(Rule30) == 8);
+    Rule30 rand = (uint64_t)time(NULL) * time(NULL) * time(NULL);
 #if OUT
     FILE* outfile = fopen("out.txt", MODE);
 #endif
