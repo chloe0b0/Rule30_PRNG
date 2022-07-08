@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <assert.h>
 #include <time.h>
-#include <string.h>
 #include <stdbool.h>
 
 // For best performance compile with:
